@@ -1,15 +1,18 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
-import { PostService } from './post.service.js';
 import { CreatePostDto } from './dto/create-post.dto.js';
+import { FindPostDto } from './dto/find-post.dto.js';
 import { UpdatePostDto } from './dto/update-post.dto.js';
+import { PostService } from './post.service.js';
 
 @Controller('post')
 export class PostController {
@@ -21,22 +24,29 @@ export class PostController {
   }
 
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  findAll(@Query() query: FindPostDto) {
+    return this.postService.findAll(query);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.postService.findOne({
+      id,
+    });
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(+id, updatePostDto);
+  update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    return this.postService.update(id, updatePostDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.postService.remove({
+      id,
+    });
   }
 }
