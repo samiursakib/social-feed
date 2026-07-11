@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum TargetType {
+  POST
+  COMMENT
+  REPLY
+}
+
+model User {
+  id           String    @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String    @unique
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  
+  // Relations
+  posts        Post[]
+  comments     Comment[]
+  replies      Reply[]
+  likes        Like[]
+}
+
+model Post {
+  id           String     @id @default(uuid())
+  userId       String
+  content      String     @db.Text
+  imageUrl     String?
+  visibility   Visibility @default(PUBLIC)
+  likeCount    Int        @default(0)
+  commentCount Int        @default(0)
+  createdAt    DateTime   @default(now())
+
+  // Relations
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments     Comment[]
+  likes        Like[]
+
+  // Indexes
+  @@index([userId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  postId     String
+  userId     String
+  content    String   @db.Text
+  likeCount  Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  // Relations
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  replies    Reply[]
+  likes      Like[]
+
+  // Indexes
+  @@index([postId])
+}
+
+model Reply {
+  id        String   @id @default(uuid())
+  commentId String
+  userId    String
+  content   String   @db.Text
+  likeCount Int      @default(0)
+  createdAt DateTime @default(now())
+
+  // Relations
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     Like[]
+
+  // Indexes
+  @@index([commentId])
+}
+
+model Like {
+  id         String     @id @default(uuid())
+  userId     String
+  targetType TargetType
+  targetId   String
+  createdAt  DateTime   @default(now())
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  postId     String?
+  post       Post?      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  commentId  String?
+  comment    Comment?   @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  
+  replyId    String?
+  reply      Reply?     @relation(fields: [replyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, targetType, targetId])
+  
+  // High-performance indexes
+  @@index([targetType, targetId])
+  @@index([userId])
+}

@@ -49,6 +49,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 *.launch
 .settings/
 *.sublime-workspace
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -65,3 +66,6 @@ pids
 # Temporary Files
 .temp/
 .tmp/
+
+# Prisma
+generated/prisma/
