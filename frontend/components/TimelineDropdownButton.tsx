@@ -1,9 +1,7 @@
-"use client";
-
 export default function TimelineDropdownButton() {
   const handleDropDown = () => {
     const target = "show";
-    const profileDropdown = document.querySelector("#_prfoile_drop");
+    const profileDropdown = document.querySelector("#_timeline_drop");
     const isDropShow = profileDropdown?.classList.contains(target);
     if (!isDropShow) {
       profileDropdown?.classList.add(target);
