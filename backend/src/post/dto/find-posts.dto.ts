@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
-import { IsOptional, IsInt } from 'class-validator';
+import { IsOptional, IsInt, IsIn } from 'class-validator';
 
-export class FindPostDto {
+export class FindPostsDto {
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -11,4 +11,8 @@ export class FindPostDto {
   @Type(() => Number)
   @IsInt()
   take?: number;
+
+  @IsOptional()
+  @IsIn(['asc', 'desc'])
+  orderBy?: 'asc' | 'desc';
 }

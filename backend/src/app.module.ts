@@ -10,6 +10,7 @@ import { PrismaModule } from './prisma/prisma.module.js';
 import { ReplyModule } from './reply/reply.module.js';
 import { UploadModule } from './upload/upload.module.js';
 import { UserModule } from './user/user.module.js';
+import { CloudinaryModule } from './cloudinary/cloudinary.module.js';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { UserModule } from './user/user.module.js';
       isGlobal: true,
     }),
     PrismaModule,
+    CloudinaryModule,
     AuthModule,
     UserModule,
     PostModule,

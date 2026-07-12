@@ -834,6 +834,7 @@ export const PostScalarFieldEnum = {
   userId: 'userId',
   content: 'content',
   imageUrl: 'imageUrl',
+  imagePublicId: 'imagePublicId',
   visibility: 'visibility',
   likeCount: 'likeCount',
   commentCount: 'commentCount',

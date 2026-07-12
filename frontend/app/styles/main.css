@@ -1603,9 +1603,22 @@
 }
 ._feed_inner_text_area_box_form textarea {
   width: 100%;
-  height: calc(86px + 2px) !important;
+  min-height: 40px;
   border: none;
-  padding: 8px !important;
+  padding: 10px 10px 20px 10px !important;
+  resize: none;
+  overflow: hidden;
+}
+
+._feed_textarea_placeholder {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #666;
+  pointer-events: none;
 }
 ._feed_inner_text_area_bottom {
   display: -webkit-box;
@@ -1712,6 +1725,9 @@
   color: var(--color7);
   padding: 8px !important;
   height: auto !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 ._textarea::-webkit-input-placeholder {
   font-size: 12px;
@@ -5682,6 +5698,9 @@
   margin: 0 0 16px 0;
 }
 ._feed_timeline_dropdown_link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.2;

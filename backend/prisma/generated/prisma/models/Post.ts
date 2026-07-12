@@ -41,6 +41,7 @@ export type PostMinAggregateOutputType = {
   userId: string | null
   content: string | null
   imageUrl: string | null
+  imagePublicId: string | null
   visibility: $Enums.Visibility | null
   likeCount: number | null
   commentCount: number | null
@@ -52,6 +53,7 @@ export type PostMaxAggregateOutputType = {
   userId: string | null
   content: string | null
   imageUrl: string | null
+  imagePublicId: string | null
   visibility: $Enums.Visibility | null
   likeCount: number | null
   commentCount: number | null
@@ -63,6 +65,7 @@ export type PostCountAggregateOutputType = {
   userId: number
   content: number
   imageUrl: number
+  imagePublicId: number
   visibility: number
   likeCount: number
   commentCount: number
@@ -86,6 +89,7 @@ export type PostMinAggregateInputType = {
   userId?: true
   content?: true
   imageUrl?: true
+  imagePublicId?: true
   visibility?: true
   likeCount?: true
   commentCount?: true
@@ -97,6 +101,7 @@ export type PostMaxAggregateInputType = {
   userId?: true
   content?: true
   imageUrl?: true
+  imagePublicId?: true
   visibility?: true
   likeCount?: true
   commentCount?: true
@@ -108,6 +113,7 @@ export type PostCountAggregateInputType = {
   userId?: true
   content?: true
   imageUrl?: true
+  imagePublicId?: true
   visibility?: true
   likeCount?: true
   commentCount?: true
@@ -206,6 +212,7 @@ export type PostGroupByOutputType = {
   userId: string
   content: string
   imageUrl: string | null
+  imagePublicId: string | null
   visibility: $Enums.Visibility
   likeCount: number
   commentCount: number
@@ -240,6 +247,7 @@ export type PostWhereInput = {
   userId?: Prisma.StringFilter<"Post"> | string
   content?: Prisma.StringFilter<"Post"> | string
   imageUrl?: Prisma.StringNullableFilter<"Post"> | string | null
+  imagePublicId?: Prisma.StringNullableFilter<"Post"> | string | null
   visibility?: Prisma.EnumVisibilityFilter<"Post"> | $Enums.Visibility
   likeCount?: Prisma.IntFilter<"Post"> | number
   commentCount?: Prisma.IntFilter<"Post"> | number
@@ -254,6 +262,7 @@ export type PostOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   visibility?: Prisma.SortOrder
   likeCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
@@ -271,6 +280,7 @@ export type PostWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Post"> | string
   content?: Prisma.StringFilter<"Post"> | string
   imageUrl?: Prisma.StringNullableFilter<"Post"> | string | null
+  imagePublicId?: Prisma.StringNullableFilter<"Post"> | string | null
   visibility?: Prisma.EnumVisibilityFilter<"Post"> | $Enums.Visibility
   likeCount?: Prisma.IntFilter<"Post"> | number
   commentCount?: Prisma.IntFilter<"Post"> | number
@@ -285,6 +295,7 @@ export type PostOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   visibility?: Prisma.SortOrder
   likeCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
@@ -304,6 +315,7 @@ export type PostScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Post"> | string
   content?: Prisma.StringWithAggregatesFilter<"Post"> | string
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
+  imagePublicId?: Prisma.StringNullableWithAggregatesFilter<"Post"> | string | null
   visibility?: Prisma.EnumVisibilityWithAggregatesFilter<"Post"> | $Enums.Visibility
   likeCount?: Prisma.IntWithAggregatesFilter<"Post"> | number
   commentCount?: Prisma.IntWithAggregatesFilter<"Post"> | number
@@ -314,6 +326,7 @@ export type PostCreateInput = {
   id?: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -328,6 +341,7 @@ export type PostUncheckedCreateInput = {
   userId: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -340,6 +354,7 @@ export type PostUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -354,6 +369,7 @@ export type PostUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -367,6 +383,7 @@ export type PostCreateManyInput = {
   userId: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -377,6 +394,7 @@ export type PostUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -388,6 +406,7 @@ export type PostUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -409,6 +428,7 @@ export type PostCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
   likeCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
@@ -425,6 +445,7 @@ export type PostMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
   likeCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
@@ -436,6 +457,7 @@ export type PostMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  imagePublicId?: Prisma.SortOrder
   visibility?: Prisma.SortOrder
   likeCount?: Prisma.SortOrder
   commentCount?: Prisma.SortOrder
@@ -549,6 +571,7 @@ export type PostCreateWithoutUserInput = {
   id?: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -561,6 +584,7 @@ export type PostUncheckedCreateWithoutUserInput = {
   id?: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -603,6 +627,7 @@ export type PostScalarWhereInput = {
   userId?: Prisma.StringFilter<"Post"> | string
   content?: Prisma.StringFilter<"Post"> | string
   imageUrl?: Prisma.StringNullableFilter<"Post"> | string | null
+  imagePublicId?: Prisma.StringNullableFilter<"Post"> | string | null
   visibility?: Prisma.EnumVisibilityFilter<"Post"> | $Enums.Visibility
   likeCount?: Prisma.IntFilter<"Post"> | number
   commentCount?: Prisma.IntFilter<"Post"> | number
@@ -613,6 +638,7 @@ export type PostCreateWithoutCommentsInput = {
   id?: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -626,6 +652,7 @@ export type PostUncheckedCreateWithoutCommentsInput = {
   userId: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -653,6 +680,7 @@ export type PostUpdateWithoutCommentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -666,6 +694,7 @@ export type PostUncheckedUpdateWithoutCommentsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -677,6 +706,7 @@ export type PostCreateWithoutLikesInput = {
   id?: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -690,6 +720,7 @@ export type PostUncheckedCreateWithoutLikesInput = {
   userId: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -717,6 +748,7 @@ export type PostUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -730,6 +762,7 @@ export type PostUncheckedUpdateWithoutLikesInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -741,6 +774,7 @@ export type PostCreateManyUserInput = {
   id?: string
   content: string
   imageUrl?: string | null
+  imagePublicId?: string | null
   visibility?: $Enums.Visibility
   likeCount?: number
   commentCount?: number
@@ -751,6 +785,7 @@ export type PostUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -763,6 +798,7 @@ export type PostUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -775,6 +811,7 @@ export type PostUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
   likeCount?: Prisma.IntFieldUpdateOperationsInput | number
   commentCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -826,6 +863,7 @@ export type PostSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   userId?: boolean
   content?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   visibility?: boolean
   likeCount?: boolean
   commentCount?: boolean
@@ -841,6 +879,7 @@ export type PostSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userId?: boolean
   content?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   visibility?: boolean
   likeCount?: boolean
   commentCount?: boolean
@@ -853,6 +892,7 @@ export type PostSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   userId?: boolean
   content?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   visibility?: boolean
   likeCount?: boolean
   commentCount?: boolean
@@ -865,13 +905,14 @@ export type PostSelectScalar = {
   userId?: boolean
   content?: boolean
   imageUrl?: boolean
+  imagePublicId?: boolean
   visibility?: boolean
   likeCount?: boolean
   commentCount?: boolean
   createdAt?: boolean
 }
 
-export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "content" | "imageUrl" | "visibility" | "likeCount" | "commentCount" | "createdAt", ExtArgs["result"]["post"]>
+export type PostOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "content" | "imageUrl" | "imagePublicId" | "visibility" | "likeCount" | "commentCount" | "createdAt", ExtArgs["result"]["post"]>
 export type PostInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   comments?: boolean | Prisma.Post$commentsArgs<ExtArgs>
@@ -897,6 +938,7 @@ export type $PostPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     userId: string
     content: string
     imageUrl: string | null
+    imagePublicId: string | null
     visibility: $Enums.Visibility
     likeCount: number
     commentCount: number
@@ -1331,6 +1373,7 @@ export interface PostFieldRefs {
   readonly userId: Prisma.FieldRef<"Post", 'String'>
   readonly content: Prisma.FieldRef<"Post", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Post", 'String'>
+  readonly imagePublicId: Prisma.FieldRef<"Post", 'String'>
   readonly visibility: Prisma.FieldRef<"Post", 'Visibility'>
   readonly likeCount: Prisma.FieldRef<"Post", 'Int'>
   readonly commentCount: Prisma.FieldRef<"Post", 'Int'>
