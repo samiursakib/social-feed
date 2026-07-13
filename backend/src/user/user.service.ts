@@ -1,15 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto.js';
-import { UpdateUserDto } from './dto/update-user.dto.js';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { Prisma, User } from 'prisma/generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { CreateUserDto } from './dto/create-user.dto.js';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const { firstName, lastName, email, password, repeatPassword } =
+      createUserDto;
+    if (password !== repeatPassword)
+      throw new BadRequestException('Passwords do not match');
+
+    const existingUser = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (existingUser)
+      throw new ConflictException('User already exists with this email');
+
+    const passwordHash = await bcrypt.hash(password, 10);
+    const createdUser = await this.prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        passwordHash,
+      },
+    });
+
+    const safeUser = { ...createdUser };
+    delete (safeUser as Record<string, any>).passwordHash;
+    return { success: true, message: 'Post uploaded', data: safeUser };
   }
 
   findAll(params: {
@@ -37,9 +66,9 @@ export class UserService {
     });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // update(id: string, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
   remove(where: Prisma.UserWhereUniqueInput): Promise<User> {
     return this.prisma.user.delete({

@@ -1,7 +1,10 @@
 export type User = {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
+  email: string;
+  password: string;
+  passwordHash?: string;
 };
 
 export type Like = {
@@ -33,7 +36,13 @@ export type Post = {
 };
 
 export type UploadedPostResponse = {
-  success: true;
+  success: boolean;
   message: string;
   data: Post;
+};
+
+export type RegisteredUserResponse = {
+  success: boolean;
+  message: string;
+  data: User;
 };

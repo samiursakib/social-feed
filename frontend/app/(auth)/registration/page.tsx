@@ -86,36 +86,12 @@ export default function RegistrationPage() {
                     height={80}
                   />
                 </div>
-                <p className="_social_registration_content_para _mar_b8">
-                  Get Started Now
-                </p>
-                <h4 className="_social_registration_content_title _titl4 _mar_b50">
-                  Registration
-                </h4>
-                <button
-                  type="button"
-                  className="_social_registration_content_btn _mar_b40"
-                >
-                  <Image
-                    src="/images/google.svg"
-                    alt="Image"
-                    className="_google_img"
-                    width={200}
-                    height={80}
-                  />{" "}
-                  <span>Register with google</span>
-                </button>
-                <div className="_social_registration_content_bottom_txt _mar_b40">
-                  {" "}
-                  <span>Or</span>
-                </div>
                 <RegistrationForm />
                 <div className="row">
                   <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <div className="_social_registration_bottom_txt">
                       <p className="_social_registration_bottom_txt_para">
-                        Dont have an account?{" "}
-                        <a href="#0">Create New Account</a>
+                        Already have an account? <a href="/login">Login now</a>
                       </p>
                     </div>
                   </div>
