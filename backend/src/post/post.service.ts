@@ -17,7 +17,6 @@ export class PostService {
     try {
       if (image) {
         uploadedImage = await this.cloudinaryService.uploadFile(image);
-        console.log('imageUpload', JSON.stringify(uploadedImage, null, 2));
         if (!uploadedImage.public_id) {
           return {
             success: false,

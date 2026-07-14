@@ -1,7 +1,10 @@
 export type User = {
-  id: string;
+  id?: string;
   firstName: string;
   lastName: string;
+  email: string;
+  password: string;
+  passwordHash?: string;
 };
 
 export type Like = {
@@ -13,7 +16,7 @@ export type Comment = {
   id: string;
   content: string;
   userId: string;
-  createdAt: string; // JSON dates are received as strings
+  createdAt: string;
 };
 
 export type Visibility = "PUBLIC" | "PRIVATE";
@@ -33,7 +36,19 @@ export type Post = {
 };
 
 export type UploadedPostResponse = {
-  success: true;
+  success: boolean;
   message: string;
   data: Post;
+};
+
+export type RegisteredUserResponse = {
+  success: boolean;
+  message: string;
+  data: User;
+};
+
+export type LoggedInUserResponse = {
+  success: boolean;
+  message: string;
+  data: string;
 };

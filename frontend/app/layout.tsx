@@ -5,6 +5,8 @@ import "@/app/styles/bootstrap.min.css";
 import "@/app/styles/common.css";
 import "@/app/styles/main.css";
 import "@/app/styles/responsive.css";
+import { AuthProvider } from "@/context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +33,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AuthProvider>
+          <Toaster position="bottom-center" reverseOrder={false} />
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }

@@ -5,7 +5,6 @@ export default function SwitchingButton() {
     const target = "_dark_wrapper";
     const layout = document.querySelector("._layout_main_wrapper");
     const isDark = layout?.classList.contains(target);
-    console.log("isDark", isDark);
     if (!isDark) {
       layout?.classList.add(target);
     } else {
