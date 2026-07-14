@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { Prisma, User } from 'prisma/generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateUserDto } from './dto/create-user.dto.js';
+import { UpdateUserDto } from './dto/update-user.dto.js';
 
 @Injectable()
 export class UserService {
@@ -66,9 +67,17 @@ export class UserService {
     });
   }
 
-  // update(id: string, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const { hashedRefreshToken } = updateUserDto;
+    await this.prisma.user.update({
+      data: {
+        hashedRefreshToken,
+      },
+      where: {
+        id,
+      },
+    });
+  }
 
   remove(where: Prisma.UserWhereUniqueInput): Promise<User> {
     return this.prisma.user.delete({

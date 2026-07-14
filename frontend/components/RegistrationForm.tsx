@@ -1,6 +1,6 @@
 "use client";
 
-import { registerUser } from "@/services/user";
+import { registerUser } from "@/services/register-user";
 import { registerSchema } from "@/services/validation/register";
 import { RegisteredUserResponse } from "@/types/type";
 import Image from "next/image";
@@ -81,7 +81,6 @@ export default function RegistrationForm() {
       }
 
       const result: RegisteredUserResponse = await registerUser(formState);
-      console.log("result", result);
       if (result.success) {
         toast.success(result.message);
         router.push("/login");
@@ -224,10 +223,7 @@ export default function RegistrationForm() {
                 name="flexRadioDefault"
                 id="flexRadioDefault2"
                 checked={agreementChecked}
-                onChange={(e) => {
-                  console.log("radio handler fired", e.target.checked);
-                  setAgreementChecked(e.target.checked);
-                }}
+                onChange={(e) => setAgreementChecked(e.target.checked)}
               />
               <label
                 className="form-check-label _social_registration_form_check_label"

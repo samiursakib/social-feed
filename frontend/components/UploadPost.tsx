@@ -1,4 +1,10 @@
+import { useAuth } from "@/context/AuthContext";
+import { usePosts } from "@/context/PostsContext";
+import { uploadPost } from "@/services/post";
+import { UploadedPostResponse } from "@/types/type";
 import Image from "next/image";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import {
   ArticleIcon,
   EditIcon,
@@ -7,11 +13,6 @@ import {
   PostIcon,
   VideoIcon,
 } from "./Icons";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { usePosts } from "@/context/PostsContext";
-import { uploadPost } from "@/services/post";
-import { UploadedPostResponse } from "@/types/type";
 
 export default function UploadPost() {
   const { addPost } = usePosts();
@@ -29,7 +30,6 @@ export default function UploadPost() {
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
-    console.log(text);
     setFormState((prev) => ({ ...prev, text }));
     e.target.style.height = "auto";
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -72,12 +72,8 @@ export default function UploadPost() {
     }
   };
 
-  console.log("loading", loading);
-
   return (
     <form onSubmit={handleSubmit}>
-      <Toaster position="bottom-center" reverseOrder={false} />
-
       <div className="_feed_inner_text_area  _b_radious6 _padd_b24 _padd_t24 _padd_r24 _padd_l24 _mar_b16">
         <div className="_feed_inner_text_area_box">
           <div className="_feed_inner_text_area_box_image">

@@ -1,9 +1,10 @@
 import { User } from "@/types/type";
 
 export const registerUser = async (body: User) => {
+  const API_URL =
+    typeof window === "undefined" ? process.env.BACKEND_API_URL : "";
+
   try {
-    const API_URL =
-      typeof window === "undefined" ? process.env.BACKEND_API_URL : "";
     const response = await fetch(`${API_URL}/api/user`, {
       method: "Post",
       headers: {

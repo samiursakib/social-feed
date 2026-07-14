@@ -11,7 +11,6 @@ export const getPosts = async () => {
     }
 
     const result = await response.json();
-    console.log("result: ", JSON.stringify(result, null, 2));
     return result;
   } catch (err) {
     console.error(err);

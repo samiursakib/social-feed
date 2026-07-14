@@ -16,7 +16,7 @@ export type Comment = {
   id: string;
   content: string;
   userId: string;
-  createdAt: string; // JSON dates are received as strings
+  createdAt: string;
 };
 
 export type Visibility = "PUBLIC" | "PRIVATE";
@@ -45,4 +45,10 @@ export type RegisteredUserResponse = {
   success: boolean;
   message: string;
   data: User;
+};
+
+export type LoggedInUserResponse = {
+  success: boolean;
+  message: string;
+  data: string;
 };
