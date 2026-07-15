@@ -7,17 +7,35 @@ export type User = {
   passwordHash?: string;
 };
 
+export type UserPreview = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type Like = {
   id: string;
   userId: string;
 };
 
-export type Comment = {
+export interface Comment {
   id: string;
   content: string;
-  userId: string;
   createdAt: string;
-};
+  likeCount: number;
+  user: UserPreview;
+  likes: Like[];
+  replies: Reply[];
+}
+
+export interface Reply {
+  id: string;
+  content: string;
+  createdAt: string;
+  likeCount: number;
+  user: UserPreview;
+  likes: Like[];
+}
 
 export type Visibility = "PUBLIC" | "PRIVATE";
 
@@ -38,7 +56,7 @@ export type Post = {
 export type UploadedPostResponse = {
   success: boolean;
   message: string;
-  data: Post;
+  data?: Post;
 };
 
 export type RegisteredUserResponse = {

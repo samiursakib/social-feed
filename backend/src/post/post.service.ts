@@ -1,9 +1,22 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { UploadApiResponse } from 'cloudinary';
-import { Post, Prisma } from 'prisma/generated/prisma/client.js';
+import {
+  Post,
+  Prisma,
+  TargetType,
+} from '../../prisma/generated/prisma/client.js';
+import { CreateCommentDto } from '../../src/comment/dto/create-comment.dto.js';
+import { AuthenticatedRequest } from '../auth/types/authenticated-req.js';
 import { CloudinaryService } from '../cloudinary/cloudinary.service.js';
+import { commentSelect } from '../comment/dto/query-comment.dto.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreatePostDto } from './dto/create-post.dto.js';
+import { PostDto, postSelect } from './dto/query-post.dto.js';
 
 @Injectable()
 export class PostService {
@@ -12,9 +25,14 @@ export class PostService {
     private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  async create(createPostDto: CreatePostDto, image?: Express.Multer.File) {
+  async create(
+    req: AuthenticatedRequest,
+    createPostDto: CreatePostDto,
+    image?: Express.Multer.File,
+  ) {
     let uploadedImage: UploadApiResponse | null = null;
     try {
+      const user = req.user;
       if (image) {
         uploadedImage = await this.cloudinaryService.uploadFile(image);
         if (!uploadedImage.public_id) {
@@ -26,7 +44,7 @@ export class PostService {
       }
       const createdPost = await this.prisma.post.create({
         data: {
-          userId: '4f9a3c72-9b16-4d1e-8f2c-5a6b7c8d9e0f',
+          userId: user.id,
           content: createPostDto.text,
           imageUrl: uploadedImage?.secure_url,
           imagePublicId: uploadedImage?.public_id,
@@ -34,36 +52,7 @@ export class PostService {
       });
       const post = await this.prisma.post.findUnique({
         where: { id: createdPost.id },
-        select: {
-          id: true,
-          content: true,
-          imageUrl: true,
-          visibility: true,
-          likeCount: true,
-          commentCount: true,
-          createdAt: true,
-          user: {
-            select: {
-              id: true,
-              firstName: true,
-              lastName: true,
-            },
-          },
-          likes: {
-            select: {
-              id: true,
-              userId: true,
-            },
-          },
-          comments: {
-            select: {
-              id: true,
-              content: true,
-              userId: true,
-              createdAt: true,
-            },
-          },
-        },
+        ...postSelect,
       });
       return { success: true, message: 'Post uploaded', data: post };
     } catch (error) {
@@ -79,51 +68,26 @@ export class PostService {
     }
   }
 
-  findAll(params: {
+  async findAll(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.PostWhereUniqueInput;
     where?: Prisma.PostWhereInput;
     orderBy?: Prisma.PostOrderByWithRelationInput;
-  }) {
+  }): Promise<{ success: boolean; data: PostDto[] }> {
     const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.post.findMany({
+    const posts = await this.prisma.post.findMany({
+      ...postSelect,
       skip,
       take,
       cursor,
       where,
       orderBy,
-      select: {
-        id: true,
-        content: true,
-        imageUrl: true,
-        visibility: true,
-        likeCount: true,
-        commentCount: true,
-        createdAt: true,
-        user: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-          },
-        },
-        likes: {
-          select: {
-            id: true,
-            userId: true,
-          },
-        },
-        comments: {
-          select: {
-            id: true,
-            content: true,
-            userId: true,
-            createdAt: true,
-          },
-        },
-      },
     });
+    return {
+      success: true,
+      data: posts,
+    };
   }
 
   findOne(
@@ -142,5 +106,142 @@ export class PostService {
     return this.prisma.post.delete({
       where,
     });
+  }
+
+  async likePost(postId: string, userId: string) {
+    const post = await this.prisma.post.findUnique({
+      where: { id: postId },
+      select: { id: true },
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post not found.');
+    }
+
+    const alreadyLiked = await this.prisma.like.findUnique({
+      where: {
+        userId_targetType_targetId: {
+          userId,
+          targetType: TargetType.POST,
+          targetId: postId,
+        },
+      },
+    });
+
+    if (alreadyLiked) {
+      throw new BadRequestException('Post already liked.');
+    }
+
+    const [like] = await this.prisma.$transaction([
+      this.prisma.like.create({
+        data: {
+          userId,
+          targetType: TargetType.POST,
+          targetId: postId,
+          postId,
+        },
+        select: {
+          id: true,
+          userId: true,
+        },
+      }),
+
+      this.prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          likeCount: {
+            increment: 1,
+          },
+        },
+      }),
+    ]);
+
+    return like;
+  }
+
+  async unlikePost(postId: string, userId: string) {
+    const like = await this.prisma.like.findUnique({
+      where: {
+        userId_targetType_targetId: {
+          userId,
+          targetType: TargetType.POST,
+          targetId: postId,
+        },
+      },
+    });
+
+    if (!like) {
+      throw new BadRequestException('Post is not liked.');
+    }
+
+    await this.prisma.$transaction([
+      this.prisma.like.delete({
+        where: {
+          id: like.id,
+        },
+      }),
+
+      this.prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          likeCount: {
+            decrement: 1,
+          },
+        },
+      }),
+    ]);
+
+    return {
+      success: true,
+      userId,
+      message: 'Post unliked.',
+    };
+  }
+
+  async createComment(postId: string, userId: string, dto: CreateCommentDto) {
+    const post = await this.prisma.post.findUnique({
+      where: {
+        id: postId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post not found.');
+    }
+
+    const [comment] = await this.prisma.$transaction([
+      this.prisma.comment.create({
+        data: {
+          postId,
+          userId,
+          content: dto.content,
+        },
+        select: commentSelect,
+      }),
+
+      this.prisma.post.update({
+        where: {
+          id: postId,
+        },
+        data: {
+          commentCount: {
+            increment: 1,
+          },
+        },
+      }),
+    ]);
+
+    return {
+      success: true,
+      message: 'Comment created.',
+      data: comment,
+    };
   }
 }

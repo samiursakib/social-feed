@@ -1,6 +1,6 @@
 import { Post } from "@/types/type";
 import Image from "next/image";
-import { ImageIcon, LikeIcon, RecorderIcon } from "./Icons";
+import CommentsSection from "./comments/CommentsSection";
 import PostActionButtons from "./PostActionButtons";
 import PostAnalytics from "./PostAnalytics";
 import RelativeTime from "./RelativeTime";
@@ -28,7 +28,7 @@ export default function FeedPost({ post }: { post: Post }) {
               </h4>
               <p className="_feed_inner_timeline_post_box_para">
                 <RelativeTime datetime={post.createdAt} /> .
-                <a href="#0">Public</a>
+                <a href="#0">{post.visibility}</a>
               </p>
             </div>
           </div>
@@ -53,139 +53,13 @@ export default function FeedPost({ post }: { post: Post }) {
           </div>
         ) : null}
       </div>
-      <PostAnalytics />
-      <PostActionButtons />
-      <div className="_feed_inner_timeline_cooment_area">
-        <div className="_feed_inner_comment_box">
-          <form className="_feed_inner_comment_box_form">
-            <div className="_feed_inner_comment_box_content">
-              <div className="_feed_inner_comment_box_content_image">
-                <Image
-                  src="/images/comment_img.png"
-                  alt=""
-                  className="_comment_img"
-                  width={200}
-                  height={80}
-                />
-              </div>
-              <div className="_feed_inner_comment_box_content_txt">
-                <textarea
-                  className="form-control _comment_textarea"
-                  placeholder="Write a comment"
-                  id="floatingTextarea2"
-                ></textarea>
-              </div>
-            </div>
-            <div className="_feed_inner_comment_box_icon">
-              <button className="_feed_inner_comment_box_icon_btn">
-                <RecorderIcon />
-              </button>
-              <button className="_feed_inner_comment_box_icon_btn">
-                <ImageIcon />
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="_timline_comment_main">
-        <div className="_previous_comment">
-          <button type="button" className="_previous_comment_txt">
-            View 4 previous comments
-          </button>
-        </div>
-        <div className="_comment_main">
-          <div className="_comment_image">
-            <a href="profile.html" className="_comment_image_link">
-              <Image
-                src="/images/txt_img.png"
-                alt=""
-                className="_comment_img1"
-                width={200}
-                height={80}
-              />
-            </a>
-          </div>
-          <div className="_comment_area">
-            <div className="_comment_details">
-              <div className="_comment_details_top">
-                <div className="_comment_name">
-                  <a href="profile.html ">
-                    <h4 className="_comment_name_title">Radovan SkillArena</h4>
-                  </a>
-                </div>
-              </div>
-              <div className="_comment_status">
-                <p className="_comment_status_text">
-                  <span>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout.{" "}
-                  </span>
-                </p>
-              </div>
-              <div className="_total_reactions">
-                <div className="_total_react">
-                  <span className="_reaction_like">
-                    <LikeIcon />
-                  </span>
-                  {/* <span className="_reaction_heart">
-                    <HeartIcon />
-                  </span> */}
-                </div>
-                <span className="_total">198</span>
-              </div>
-              <div className="_comment_reply">
-                <div className="_comment_reply_num">
-                  <ul className="_comment_reply_list">
-                    <li>
-                      <span>Like.</span>
-                    </li>
-                    <li>
-                      <span>Reply.</span>
-                    </li>
-                    <li>
-                      <span>Share</span>
-                    </li>
-                    <li>
-                      <span className="_time_link">.21m</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="_feed_inner_comment_box">
-              <form className="_feed_inner_comment_box_form">
-                <div className="_feed_inner_comment_box_content">
-                  <div className="_feed_inner_comment_box_content_image">
-                    <Image
-                      src="/images/comment_img.png"
-                      alt=""
-                      className="_comment_img"
-                      width={200}
-                      height={80}
-                    />
-                  </div>
-                  <div className="_feed_inner_comment_box_content_txt">
-                    <textarea
-                      className="form-control _comment_textarea"
-                      placeholder="Write a comment"
-                      id="floatingTextarea2"
-                    ></textarea>
-                  </div>
-                </div>
-                <div className="_feed_inner_comment_box_icon">
-                  <button className="_feed_inner_comment_box_icon_btn">
-                    <RecorderIcon />
-                  </button>
-                  <button className="_feed_inner_comment_box_icon_btn">
-                    <ImageIcon />
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PostAnalytics
+        likeCount={post.likeCount}
+        commentCount={post.commentCount}
+        shareCount={0}
+      />
+      <PostActionButtons post={post} />
+      <CommentsSection post={post} />
     </div>
   );
 }

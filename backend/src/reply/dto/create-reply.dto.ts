@@ -1,1 +1,3 @@
-export class CreateReplyDto {}
+export class CreateReplyDto {
+  content: string;
+}
