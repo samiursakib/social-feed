@@ -8,8 +8,8 @@ A full-stack social media platform built with **NestJS**, **Next.js**, and **Pos
 
 | Layer | URL |
 |-------|-----|
-| Frontend | [INSERT_FRONTEND_LINK_HERE] |
-| Backend API | `https://your-api-domain.com/api` |
+| Frontend | [http://social-feed-peach.vercel.app](https://social-feed-peach.vercel.app) |
+| Backend API | `https://dummy-api-domain.com/api` |
 
 ---
 
