@@ -7,9 +7,9 @@ import { PostsProvider } from "@/context/PostsContext";
 import { getPosts } from "@/services/post";
 
 export default async function Home() {
-  const posts = await getPosts();
+  const { data } = await getPosts();
   return (
-    <PostsProvider initialPosts={posts}>
+    <PostsProvider initialPosts={data}>
       <div className="_layout _layout_main_wrapper">
         <SwitchingButton />
         <div className="_main_layout">

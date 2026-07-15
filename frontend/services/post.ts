@@ -1,8 +1,11 @@
-export const getPosts = async () => {
+import { Post } from "@/types/type";
+
+export const getPosts = async (): Promise<{
+  success: boolean;
+  data: Post[];
+}> => {
   try {
-    const API_URL =
-      typeof window === "undefined" ? process.env.BACKEND_API_URL : "";
-    const response = await fetch(`${API_URL}/api/post`);
+    const response = await fetch(`${process.env.BACKEND_API_URL}/api/post`);
 
     if (!response.ok) {
       throw new Error(
@@ -14,29 +17,6 @@ export const getPosts = async () => {
     return result;
   } catch (err) {
     console.error(err);
-    throw err;
-  }
-};
-
-export const uploadPost = async (formData: FormData) => {
-  try {
-    const API_URL =
-      typeof window === "undefined" ? process.env.BACKEND_API_URL : "";
-    const response = await fetch(`${API_URL}/api/post`, {
-      method: "Post",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Error: ${response.statusText} with status code ${response.status}`,
-      );
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (err) {
-    console.error(err);
-    throw err;
+    return { success: false, data: [] };
   }
 };

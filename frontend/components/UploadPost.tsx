@@ -1,7 +1,4 @@
-import { useAuth } from "@/context/AuthContext";
 import { usePosts } from "@/context/PostsContext";
-import { uploadPost } from "@/services/post";
-import { UploadedPostResponse } from "@/types/type";
 import Image from "next/image";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -15,7 +12,7 @@ import {
 } from "./Icons";
 
 export default function UploadPost() {
-  const { addPost } = usePosts();
+  const { addPost, uploadPost } = usePosts();
 
   const [formState, setFormState] = useState<{
     text: string;
@@ -54,8 +51,8 @@ export default function UploadPost() {
       formData.append("text", formState.text);
       if (formState.image) formData.append("image", formState.image);
 
-      const result: UploadedPostResponse = await uploadPost(formData);
-      if (result.success) {
+      const result = await uploadPost(formData);
+      if (result.success && result.data) {
         toast.success(result.message);
         setFormState({ text: "", image: null });
         setPreview(null);
@@ -245,14 +242,11 @@ function PostButton(
         disabled={loading}
       >
         {loading ? (
-          <>
-            <span
-              className="spinner-border spinner-border-sm me-2"
-              role="status"
-              aria-hidden="true"
-            />
-            <span className="ms-2">Posting...</span>
-          </>
+          <span
+            className="spinner-border spinner-border-sm me-2"
+            role="status"
+            aria-hidden="true"
+          />
         ) : (
           <>
             <PostIcon />
