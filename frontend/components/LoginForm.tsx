@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/context/AuthContext";
 import { loginSchema } from "@/services/validation/login";
-import { LoggedInUserResponse } from "@/types/type";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";

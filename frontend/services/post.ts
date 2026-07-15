@@ -5,7 +5,9 @@ export const getPosts = async (): Promise<{
   data: Post[];
 }> => {
   try {
-    const response = await fetch(`${process.env.BACKEND_API_URL}/api/post`);
+    const response = await fetch(`${process.env.BACKEND_API_URL}/api/post`, {
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       throw new Error(

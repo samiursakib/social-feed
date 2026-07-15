@@ -6,6 +6,8 @@ import SwitchingButton from "@/components/SwitchingButton";
 import { PostsProvider } from "@/context/PostsContext";
 import { getPosts } from "@/services/post";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const { data } = await getPosts();
   return (
